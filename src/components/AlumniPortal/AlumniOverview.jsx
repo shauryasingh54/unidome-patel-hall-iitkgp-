@@ -7,8 +7,7 @@ import {
   Clock,
   CheckCircle2,
   ArrowRight,
-  Plus,
-  Flame
+  Plus
 } from 'lucide-react';
 
 export const AlumniOverview = () => {
@@ -91,14 +90,6 @@ export const AlumniOverview = () => {
           </div>
         </div>
       </div>
-
-      <Link to="/hall-life" className="surface-card p-5 flex items-center justify-between hover:border-maroon-200 dark:hover:border-maroon-700 transition-all">
-        <div>
-          <h3 className="font-bold text-heading text-sm flex items-center gap-1.5"><Flame className="w-3.5 h-3.5" /> Hall Life</h3>
-          <p className="text-xs text-muted mt-0.5">Events, traditions, and success stories from Patel Hall.</p>
-        </div>
-        <ArrowRight className="w-4 h-4 text-maroon-600 shrink-0" />
-      </Link>
 
     </div>
   );

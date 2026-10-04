@@ -47,7 +47,8 @@ export const AppContent = () => {
         <Route path="/" element={<Navigate to={roleHome} replace />} />
 
         <Route path="/student" element={<StudentLayout />}>
-          <Route index element={<StudentOverview />} />
+          <Route index element={<HallLife />} />
+          <Route path="dashboard" element={<StudentOverview />} />
           <Route path="openings" element={<StudentOpenings />} />
           <Route path="openings/:opportunityId" element={<OpportunityDetail />} />
           <Route path="applications" element={<StudentApplications />} />
@@ -56,7 +57,8 @@ export const AppContent = () => {
         </Route>
 
         <Route path="/alumni" element={<AlumniLayout />}>
-          <Route index element={<AlumniOverview />} />
+          <Route index element={<HallLife />} />
+          <Route path="dashboard" element={<AlumniOverview />} />
           <Route path="queue" element={<AlumniQueue />} />
           <Route path="postings" element={<AlumniPostings />} />
         </Route>

@@ -1,27 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { HeroSlider } from '../AlumniPortal/HeroSlider';
-import { ArrowLeft, MapPin, Flame } from 'lucide-react';
+import { MapPin, Flame } from 'lucide-react';
 
 export const HallLife = () => {
-  const { announcements, currentRole } = useApp();
-  const backTo = currentRole === 'Alumni' ? '/alumni' : currentRole === 'Admin' ? '/admin' : '/student';
+  const { announcements } = useApp();
 
   return (
     <div className="space-y-8">
-
-      <div className="flex items-center justify-between">
-        <div>
-          <span className="text-label block mb-1.5">Patel Hall Community</span>
-          <h1 className="text-2xl sm:text-3xl font-black text-maroon-900 dark:text-peach-50 tracking-tight">
-            Hall Life & Traditions
-          </h1>
-        </div>
-        <Link to={backTo} className="btn-ghost">
-          <ArrowLeft className="w-3.5 h-3.5" /> Back to Dashboard
-        </Link>
-      </div>
 
       <HeroSlider />
 

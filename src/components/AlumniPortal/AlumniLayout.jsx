@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
-import { LayoutDashboard, FileCheck2, Briefcase } from 'lucide-react';
+import { LayoutDashboard, FileCheck2, Briefcase, Flame } from 'lucide-react';
 
 const navItems = [
-  { to: '/alumni', label: 'Overview', icon: LayoutDashboard, end: true },
+  { to: '/alumni', label: 'Hall Life', icon: Flame, end: true },
+  { to: '/alumni/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/alumni/queue', label: 'Review Queue', icon: FileCheck2 },
   { to: '/alumni/postings', label: 'My Postings', icon: Briefcase }
 ];

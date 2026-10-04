@@ -5,11 +5,14 @@ import {
   Compass,
   CheckCircle2,
   Layers,
-  UserPlus
+  UserPlus,
+  Flame,
+  LayoutDashboard
 } from 'lucide-react';
 
 const navItems = [
-  { to: '/student', label: 'Overview', icon: Compass, end: true },
+  { to: '/student', label: 'Hall Life', icon: Flame, end: true },
+  { to: '/student/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/student/openings', label: 'Openings', icon: Compass },
   { to: '/student/applications', label: 'Applications', icon: CheckCircle2 },
   { to: '/student/resumes', label: 'Resumes', icon: Layers },

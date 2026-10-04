@@ -7,8 +7,7 @@ import {
   Layers,
   ArrowRight,
   Sparkles,
-  Clock,
-  Flame
+  Clock
 } from 'lucide-react';
 
 export const StudentOverview = () => {
@@ -96,23 +95,13 @@ export const StudentOverview = () => {
         </div>
       )}
 
-      {/* Secondary links */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Link to="/student/referral" className="surface-card p-5 flex items-center justify-between hover:border-maroon-200 dark:hover:border-maroon-700 transition-all">
-          <div>
-            <h3 className="font-bold text-heading text-sm">Need a Custom Referral?</h3>
-            <p className="text-xs text-muted mt-0.5">Submit a target company or external POC for Admin to verify.</p>
-          </div>
-          <ArrowRight className="w-4 h-4 text-maroon-600 shrink-0" />
-        </Link>
-        <Link to="/hall-life" className="surface-card p-5 flex items-center justify-between hover:border-maroon-200 dark:hover:border-maroon-700 transition-all">
-          <div>
-            <h3 className="font-bold text-heading text-sm flex items-center gap-1.5"><Flame className="w-3.5 h-3.5" /> Hall Life</h3>
-            <p className="text-xs text-muted mt-0.5">Events, traditions, and success stories from Patel Hall.</p>
-          </div>
-          <ArrowRight className="w-4 h-4 text-maroon-600 shrink-0" />
-        </Link>
-      </div>
+      <Link to="/student/referral" className="surface-card p-5 flex items-center justify-between hover:border-maroon-200 dark:hover:border-maroon-700 transition-all">
+        <div>
+          <h3 className="font-bold text-heading text-sm">Need a Custom Referral?</h3>
+          <p className="text-xs text-muted mt-0.5">Submit a target company or external POC for Admin to verify.</p>
+        </div>
+        <ArrowRight className="w-4 h-4 text-maroon-600 shrink-0" />
+      </Link>
 
     </div>
   );
