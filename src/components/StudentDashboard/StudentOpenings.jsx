@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
-import { Search, ChevronRight } from 'lucide-react';
+import { Search, ArrowRight } from 'lucide-react';
+
+const TYPES = ['All', 'Full-time Job', 'Internship (6 Months)', 'Referral Spot'];
 
 export const StudentOpenings = () => {
   const { opportunities } = useApp();
@@ -9,93 +11,58 @@ export const StudentOpenings = () => {
   const [typeFilter, setTypeFilter] = useState('All');
 
   const filteredOpps = opportunities.filter(opp => {
+    const q = searchTerm.toLowerCase();
     const matchesSearch =
-      opp.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      opp.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      opp.tags?.some(t => t.toLowerCase().includes(searchTerm.toLowerCase()));
-
+      opp.title.toLowerCase().includes(q) ||
+      opp.company.toLowerCase().includes(q) ||
+      opp.tags?.some(t => t.toLowerCase().includes(q));
     const matchesType = typeFilter === 'All' || opp.type === typeFilter;
     return matchesSearch && matchesType;
   });
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6 reveal">
 
-      <div>
-        <h1 className="text-2xl font-black text-maroon-900 dark:text-peach-50 tracking-tight">
-          Alumni Openings & Drives
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <h1 className="display text-4xl sm:text-5xl text-maroon-900 dark:text-peach-50">
+          Openings
         </h1>
-        <p className="text-sm text-muted mt-1">
-          {filteredOpps.length} opening{filteredOpps.length !== 1 ? 's' : ''} posted by verified Patel Hall alumni.
-        </p>
-      </div>
-
-      {/* Controls Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-3 w-4 h-4 text-sand-400" />
-          <input
-            type="text"
-            placeholder="Search by role title, company, or skill tags..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="input-field pl-10"
-          />
-        </div>
-
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-peach-100/70 dark:bg-sand-800/60 border border-sand-200/80 dark:border-sand-700 text-xs overflow-x-auto shrink-0">
-          {['All', 'Full-time Job', 'Internship (6 Months)', 'Referral Spot'].map(t => (
-            <button
-              key={t}
-              onClick={() => setTypeFilter(t)}
-              className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer whitespace-nowrap ${
-                typeFilter === t
-                  ? 'bg-maroon-700 text-peach-50 shadow-sm'
-                  : 'text-sand-500 dark:text-sand-400 hover:text-maroon-700 dark:hover:text-peach-100'
-              }`}
-            >
-              {t}
-            </button>
-          ))}
+        <div className="flex flex-col sm:flex-row gap-3 md:w-[560px]">
+          <div className="relative flex-1">
+            <Search className="absolute left-3.5 top-3 w-4 h-4 text-sand-400" />
+            <input
+              type="text"
+              placeholder="Search role, company or skill"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              className="input-field pl-10"
+            />
+          </div>
+          <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="input-field sm:w-56">
+            {TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
         </div>
       </div>
 
-      {/* Drives Grid — lean cards, click through to detail */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="border-t divider">
+        {filteredOpps.length === 0 && (
+          <p className="py-10 text-center text-sm text-muted">No openings match your search.</p>
+        )}
         {filteredOpps.map(opp => (
-          <Link
-            key={opp.id}
-            to={`/student/openings/${opp.id}`}
-            className="surface-card p-6 hover:border-maroon-200 dark:hover:border-maroon-700 transition-all flex flex-col justify-between space-y-4"
-          >
-            <div className="space-y-2">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <span className="text-mono-meta uppercase tracking-wide">
-                    {opp.company} • {opp.type}
-                  </span>
-                  <h3 className="text-base font-extrabold text-heading mt-0.5">
-                    {opp.title}
-                  </h3>
-                </div>
-                <span className={opp.status === 'Active' ? 'pill-success shrink-0' : 'pill-neutral shrink-0'}>
-                  {opp.status}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2 flex-wrap text-xs text-muted">
-                <span className="font-mono font-bold text-maroon-700 dark:text-peach-200">{opp.salary}</span>
-                <span>•</span>
-                <span>{opp.location}</span>
-              </div>
+          <Link key={opp.id} to={`/student/openings/${opp.id}`} className="ruled-row px-1 group">
+            <div className="min-w-0">
+              <span className="text-mono-meta uppercase tracking-wide">{opp.company} · {opp.type}</span>
+              <h3 className="font-bold text-base text-heading group-hover:text-maroon-700 dark:group-hover:text-peach-200 transition-colors">
+                {opp.title}
+              </h3>
             </div>
-
-            <div className="pt-3 border-t divider flex items-center justify-between gap-3">
-              <span className="text-mono-meta">{opp.applicantsCount || 0} applicants</span>
-              <span className="inline-flex items-center gap-1 text-xs font-bold text-maroon-700 dark:text-peach-200">
-                View Details
-                <ChevronRight className="w-3.5 h-3.5 stroke-[3]" />
-              </span>
+            <div className="hidden md:block text-right text-sm shrink-0">
+              <div className="font-mono font-semibold text-maroon-700 dark:text-peach-200">{opp.salary}</div>
+              <div className="text-muted text-xs mt-0.5">{opp.location}</div>
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <span className={opp.status === 'Active' ? 'pill-success' : 'pill-neutral'}>{opp.status}</span>
+              <ArrowRight className="w-4 h-4 text-sand-400 group-hover:text-maroon-700 transition-colors" />
             </div>
           </Link>
         ))}

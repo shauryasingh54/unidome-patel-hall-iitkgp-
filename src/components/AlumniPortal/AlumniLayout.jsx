@@ -20,7 +20,7 @@ export const AlumniLayout = () => {
     <div className="space-y-8 max-w-7xl mx-auto">
 
       {/* Hero Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 pb-6 border-b divider">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 pb-5 border-b divider">
         <div>
           <span className="text-label block mb-1.5">
             Alumni Reviewer Workspace

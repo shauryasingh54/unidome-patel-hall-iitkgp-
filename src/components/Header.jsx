@@ -49,7 +49,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-30 w-full surface-header">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between gap-4">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
 
         {/* Left: Branding & Official Patel Hall Emblem */}
         <div className="flex items-center gap-5 shrink-0">

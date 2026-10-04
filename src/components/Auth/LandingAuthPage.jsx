@@ -28,12 +28,6 @@ export const LandingAuthPage = () => {
   return (
     <div className="min-h-screen w-full surface-page text-heading font-sans antialiased selection:bg-maroon-200 relative overflow-hidden">
 
-      {/* Decorative warm gradient backdrop */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-32 -right-32 w-[32rem] h-[32rem] rounded-full bg-maroon-100/60 dark:bg-maroon-900/20 blur-3xl" />
-        <div className="absolute top-1/3 -left-40 w-[28rem] h-[28rem] rounded-full bg-peach-200/60 dark:bg-peach-900/15 blur-3xl" />
-      </div>
-
       <div className="relative z-10 flex flex-col min-h-screen p-4 sm:p-6 lg:p-10">
 
         {/* Top Navbar */}
@@ -78,8 +72,8 @@ export const LandingAuthPage = () => {
               <Flame className="w-3.5 h-3.5" />
               <span>Patelian Brotherhood & Career Network</span>
             </div>
-            <h1 className="text-4xl sm:text-6xl font-black text-maroon-900 dark:text-peach-50 tracking-tight leading-[1.05]">
-              Sign In to the Patel Hall Referral Vault
+            <h1 className="display text-5xl sm:text-7xl text-maroon-900 dark:text-peach-50 leading-[0.98]">
+              Patel Hall<br />Referral Vault
             </h1>
             <p className="text-sm sm:text-base text-muted leading-relaxed max-w-xl mx-auto">
               Connect students with verified alumni across Stripe, Uber, Google, and top Tier-1 tech for 1-click CV reviews, 1-to-10 scoring, and confidential referral fast-tracks.
@@ -102,7 +96,6 @@ export const LandingAuthPage = () => {
                 onClick={loginAsStudent}
                 className="surface-card p-6 sm:p-8 hover:border-maroon-300 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 group relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-36 h-36 bg-maroon-100/50 dark:bg-maroon-900/20 rounded-full blur-2xl pointer-events-none" />
 
                 <div className="space-y-4 relative z-10">
                   <div className="flex items-center justify-between">
@@ -147,7 +140,6 @@ export const LandingAuthPage = () => {
                 onClick={loginAsAlumni}
                 className="surface-card p-6 sm:p-8 hover:border-maroon-300 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 group relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 w-36 h-36 bg-peach-200/60 dark:bg-peach-900/15 rounded-full blur-2xl pointer-events-none" />
 
                 <div className="space-y-4 relative z-10">
                   <div className="flex items-center justify-between">
