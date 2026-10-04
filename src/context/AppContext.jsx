@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   INITIAL_HERO_SLIDES,
   INITIAL_ANNOUNCEMENTS,
@@ -15,8 +16,15 @@ import {
 
 const AppContext = createContext();
 
+const roleHomePath = (role) => {
+  if (role === 'Alumni') return '/alumni';
+  if (role === 'Admin') return '/admin';
+  return '/student';
+};
+
 export const AppProvider = ({ children }) => {
-  const [theme, setTheme] = useState('dark');
+  const navigate = useNavigate();
+  const [theme, setTheme] = useState('light');
 
   // Auth & Session State
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -54,11 +62,11 @@ export const AppProvider = ({ children }) => {
   const [activeChatThreadId, setActiveChatThreadId] = useState('thread-1');
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [selectedReviewApp, setSelectedReviewApp] = useState(null);
-  const [selectedOpportunityForApply, setSelectedOpportunityForApply] = useState(null);
   const [isPostOpportunityOpen, setIsPostOpportunityOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isFeedbackNetworkOpen, setIsFeedbackNetworkOpen] = useState(false);
+  const [isAccessTransferOpen, setIsAccessTransferOpen] = useState(false);
 
   // Sync to localStorage
   useEffect(() => {
@@ -101,11 +109,13 @@ export const AppProvider = ({ children }) => {
   const loginAsStudent = () => {
     setCurrentUser(DEMO_USERS.student);
     setIsAuthenticated(true);
+    navigate('/student');
   };
 
   const loginAsAlumni = () => {
     setCurrentUser(DEMO_USERS.alumni);
     setIsAuthenticated(true);
+    navigate('/alumni');
   };
 
   const loginCustom = (email, role) => {
@@ -121,6 +131,7 @@ export const AppProvider = ({ children }) => {
       });
     }
     setIsAuthenticated(true);
+    navigate(roleHomePath(role));
   };
 
   const registerUser = (userData) => {
@@ -132,10 +143,12 @@ export const AppProvider = ({ children }) => {
     setCurrentUser(newUser);
     setIsAuthenticated(true);
     setIsRegisterModalOpen(false);
+    navigate(roleHomePath(newUser.role));
   };
 
   const signOut = () => {
     setIsAuthenticated(false);
+    navigate('/');
   };
 
   const setCurrentRole = (role) => {
@@ -151,6 +164,7 @@ export const AppProvider = ({ children }) => {
         hall: 'Patel Hall of Residence'
       });
     }
+    navigate(roleHomePath(role));
   };
 
   // Student 4-Resume Management
@@ -378,7 +392,9 @@ export const AppProvider = ({ children }) => {
       opportunities,
       applications,
       feedbackNetwork,
-      chatThreads
+      chatThreads,
+      referralRequests,
+      adminUsers
     }, null, 2);
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -387,6 +403,74 @@ export const AppProvider = ({ children }) => {
     link.download = `Patel_Hall_Ledger_Export_${new Date().toISOString().slice(0, 10)}.json`;
     link.click();
     URL.revokeObjectURL(url);
+  };
+
+  // Admin: update an application's status directly from the master ticket table
+  const updateApplicationStatus = (appId, newStatus) => {
+    setApplications(prev =>
+      prev.map(app => (app.id === appId ? { ...app, status: newStatus } : app))
+    );
+  };
+
+  // Admin: restore studentResumes/opportunities/applications/etc. from an exported JSON backup
+  const importDatabaseBackup = (jsonString) => {
+    try {
+      const data = JSON.parse(jsonString);
+      if (!data || typeof data !== 'object') return false;
+      if (data.studentResumes) setStudentResumes(data.studentResumes);
+      if (data.opportunities) setOpportunities(data.opportunities);
+      if (data.applications) setApplications(data.applications);
+      if (data.feedbackNetwork) setFeedbackNetwork(data.feedbackNetwork);
+      if (data.chatThreads) setChatThreads(data.chatThreads);
+      if (data.referralRequests) setReferralRequests(data.referralRequests);
+      if (data.adminUsers) setAdminUsers(data.adminUsers);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  // Admin: hand off "Primary Admin" status to another team member
+  const transferAdminAccess = (userId, roleScope) => {
+    setAdminUsers(prev =>
+      prev.map(u => {
+        if (u.id === userId) return { ...u, status: 'Primary Admin', role: roleScope };
+        if (u.status === 'Primary Admin') return { ...u, status: 'Admin' };
+        return u;
+      })
+    );
+  };
+
+  // Student: submit a custom referral/external-POC request for Admin to verify
+  const submitCustomReferralRequest = (requestData) => {
+    const newRequest = {
+      id: `req-${Date.now()}`,
+      studentName: currentUser.name || 'Sanya Gupta',
+      studentRoll: currentUser.rollNumber || '2021CSB1042',
+      studentEmail: currentUser.email || 'sanya.g@kgpian.iitkgp.ac.in',
+      status: 'Pending Admin Verification',
+      submittedAt: new Date().toISOString().slice(0, 16).replace('T', ' '),
+      ...requestData
+    };
+    setReferralRequests(prev => [newRequest, ...prev]);
+  };
+
+  // Student/Alumni: generate a UniDome ID during the Gmail/manual registration flow
+  const registerGmailDomeId = ({ email, fullName, role, rollNo, companyName }) => {
+    const newUser = {
+      name: fullName,
+      email,
+      role,
+      rollNumber: rollNo,
+      hall: 'Patel Hall of Residence',
+      company: companyName,
+      domeId: `PATEL-${(role || 'USR').toUpperCase().slice(0, 4)}-${Math.floor(1000 + Math.random() * 9000)}`,
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+    };
+    setCurrentUser(newUser);
+    setIsAuthenticated(true);
+    navigate(roleHomePath(role));
+    return newUser;
   };
 
   return (
@@ -419,8 +503,6 @@ export const AppProvider = ({ children }) => {
         startFollowUpChat,
         selectedReviewApp,
         setSelectedReviewApp,
-        selectedOpportunityForApply,
-        setSelectedOpportunityForApply,
         isPostOpportunityOpen,
         setIsPostOpportunityOpen,
         isAuthModalOpen,
@@ -438,7 +520,16 @@ export const AppProvider = ({ children }) => {
         chatThreads,
         sendChatMessage,
         feedbackNetwork,
-        exportDatabaseBackup
+        exportDatabaseBackup,
+        referralRequests,
+        adminUsers,
+        isAccessTransferOpen,
+        setIsAccessTransferOpen,
+        updateApplicationStatus,
+        importDatabaseBackup,
+        transferAdminAccess,
+        registerGmailDomeId,
+        submitCustomReferralRequest
       }}
     >
       {children}
