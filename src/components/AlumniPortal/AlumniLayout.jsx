@@ -30,7 +30,7 @@ export const AlumniLayout = () => {
           </h1>
         </div>
 
-        <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-peach-100/70 dark:bg-sand-800/60 border border-sand-200/80 dark:border-sand-700 self-start sm:self-auto">
+        <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/45 backdrop-blur-xl dark:bg-white/5 border border-sand-200/80 dark:border-sand-700 self-start sm:self-auto">
           <div className="h-9 w-9 rounded-xl bg-peach-600 text-peach-50 flex items-center justify-center font-bold text-sm">
             {initials}
           </div>

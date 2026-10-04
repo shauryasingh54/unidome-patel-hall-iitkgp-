@@ -25,7 +25,7 @@ export const AlumniPostings = () => {
         </button>
       </div>
 
-      <div className="flex items-center gap-1 p-1 rounded-xl bg-peach-100/70 dark:bg-sand-800/60 border border-sand-200/80 dark:border-sand-700 text-xs w-fit">
+      <div className="flex items-center gap-1 p-1 rounded-xl bg-white/45 backdrop-blur-xl dark:bg-white/5 border border-sand-200/80 dark:border-sand-700 text-xs w-fit">
         {['All', 'Active', 'Closed'].map(s => (
           <button
             key={s}
@@ -33,7 +33,7 @@ export const AlumniPostings = () => {
             className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
               statusFilter === s
                 ? 'bg-maroon-700 text-peach-50 shadow-sm'
-                : 'text-sand-500 dark:text-sand-400 hover:text-maroon-700 dark:hover:text-peach-100'
+                : 'text-sand-700 dark:text-sand-300 hover:text-maroon-700 dark:hover:text-peach-100'
             }`}
           >
             {s}
@@ -79,7 +79,7 @@ export const AlumniPostings = () => {
                 <span>•</span>
                 <span>{opp.applicantsCount || 0} applicants</span>
               </div>
-              <button onClick={() => deleteOpportunity(opp.id)} className="btn-danger-ghost p-1.5" title="Delete Posting">
+              <button onClick={() => window.confirm('Delete this posting? Existing applications stay on record.') && deleteOpportunity(opp.id)} className="btn-danger-ghost p-1.5" title="Delete Posting">
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
             </div>

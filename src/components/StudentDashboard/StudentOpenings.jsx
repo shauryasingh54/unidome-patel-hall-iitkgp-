@@ -29,7 +29,7 @@ export const StudentOpenings = () => {
         </h1>
         <div className="flex flex-col sm:flex-row gap-3 md:w-[560px]">
           <div className="relative flex-1">
-            <Search className="absolute left-3.5 top-3 w-4 h-4 text-sand-400" />
+            <Search className="absolute left-3.5 top-3 w-4 h-4 text-sand-600" />
             <input
               type="text"
               placeholder="Search role, company or skill"
@@ -62,7 +62,7 @@ export const StudentOpenings = () => {
             </div>
             <div className="flex items-center gap-3 shrink-0">
               <span className={opp.status === 'Active' ? 'pill-success' : 'pill-neutral'}>{opp.status}</span>
-              <ArrowRight className="w-4 h-4 text-sand-400 group-hover:text-maroon-700 transition-colors" />
+              <ArrowRight className="w-4 h-4 text-sand-600 group-hover:text-maroon-700 transition-colors" />
             </div>
           </Link>
         ))}

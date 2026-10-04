@@ -23,7 +23,7 @@ export const AdminTeam = () => {
             <div>
               <h4 className="font-bold text-base text-heading">{usr.name}</h4>
               <p className="text-sm text-muted">{usr.role}</p>
-              <p className="text-[11px] font-mono text-sand-400 mt-1">{usr.email}</p>
+              <p className="text-[11px] font-mono text-sand-600 mt-1">{usr.email}</p>
             </div>
           </div>
         ))}

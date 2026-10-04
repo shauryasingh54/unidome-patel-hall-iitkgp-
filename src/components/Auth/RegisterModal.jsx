@@ -57,14 +57,14 @@ export const RegisterModal = ({ onClose }) => {
         </div>
 
         {/* Role Selector Tabs */}
-        <div className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-peach-100/70 dark:bg-sand-800/60 border border-sand-200/80 dark:border-sand-700 text-xs font-bold">
+        <div className="grid grid-cols-2 gap-2 p-1 rounded-xl bg-white/45 backdrop-blur-xl dark:bg-white/5 border border-sand-200/80 dark:border-sand-700 text-xs font-bold">
           <button
             type="button"
             onClick={() => setRole('Student')}
             className={`py-2.5 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-2 ${
               role === 'Student'
                 ? 'bg-maroon-700 text-peach-50 shadow-sm font-black'
-                : 'text-sand-500 dark:text-sand-400 hover:text-maroon-700 dark:hover:text-peach-100'
+                : 'text-sand-700 dark:text-sand-300 hover:text-maroon-700 dark:hover:text-peach-100'
             }`}
           >
             <GraduationCap className="w-4 h-4" />
@@ -77,7 +77,7 @@ export const RegisterModal = ({ onClose }) => {
             className={`py-2.5 rounded-lg transition-all cursor-pointer flex items-center justify-center gap-2 ${
               role === 'Alumni'
                 ? 'bg-maroon-700 text-peach-50 shadow-sm font-black'
-                : 'text-sand-500 dark:text-sand-400 hover:text-maroon-700 dark:hover:text-peach-100'
+                : 'text-sand-700 dark:text-sand-300 hover:text-maroon-700 dark:hover:text-peach-100'
             }`}
           >
             <ShieldCheck className="w-4 h-4" />

@@ -19,7 +19,7 @@ export const AdminDrives = () => {
               <h4 className="font-bold text-base text-heading">{opp.title}</h4>
               <p className="text-xs text-muted mt-1">POC: {opp.alumName} • Salary: {opp.salary}</p>
             </div>
-            <button onClick={() => deleteOpportunity(opp.id)} className="btn-danger-ghost p-2" title="Delete Drive">
+            <button onClick={() => window.confirm('Delete this posting? Existing applications stay on record.') && deleteOpportunity(opp.id)} className="btn-danger-ghost p-2" title="Delete Drive">
               <Trash2 className="w-4 h-4" />
             </button>
           </div>

@@ -34,7 +34,7 @@ export const OpportunityDetail = () => {
     );
   }
 
-  const alreadyApplied = applications.some(a => a.opportunityId === opportunity.id);
+  const alreadyApplied = applications.some(a => a.opportunityId === opportunity.id && a.studentName === currentUser?.name);
   const chosenResume = studentResumes.find(r => r.id === selectedResumeId) || studentResumes[0];
 
   const handleSubmit = (e) => {
@@ -135,7 +135,7 @@ export const OpportunityDetail = () => {
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="pill-neutral px-1.5 py-0.2 text-[9px]">Slot #{resume.slotNumber}</span>
-                        <span className={`text-[9px] font-mono font-bold ${isSelected ? 'text-maroon-700 dark:text-peach-200' : 'text-sand-400'}`}>
+                        <span className={`text-[9px] font-mono font-bold ${isSelected ? 'text-maroon-700 dark:text-peach-200' : 'text-sand-600'}`}>
                           {resume.badge}
                         </span>
                       </div>

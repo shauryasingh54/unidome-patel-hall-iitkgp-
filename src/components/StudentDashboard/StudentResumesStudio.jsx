@@ -76,7 +76,7 @@ export const StudentResumesStudio = () => {
         </div>
 
         <span className="pill-brand self-start sm:self-auto">
-          4 of 4 Slots Active
+          {studentResumes.length} of 4 slots configured
         </span>
       </div>
 
@@ -102,7 +102,7 @@ export const StudentResumesStudio = () => {
                 </div>
 
                 <button
-                  onClick={() => setEditingResume({ ...resume })}
+                  onClick={() => setEditingResume({ ...resume, repoLinks: (resume.repoLinks || []).map(r => ({ ...r })), attachments: (resume.attachments || []).map(a => ({ ...a })) })}
                   className="btn-secondary shrink-0 px-3 py-1.5 text-xs"
                 >
                   <Edit3 className="w-3.5 h-3.5" />
@@ -158,7 +158,7 @@ export const StudentResumesStudio = () => {
                         href={repo.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-peach-100/70 dark:bg-sand-800/60 hover:bg-maroon-50 dark:hover:bg-sand-700 text-sand-600 dark:text-sand-300 border border-sand-200 dark:border-sand-700 font-medium"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/45 backdrop-blur-xl dark:bg-white/5 hover:bg-maroon-50 dark:hover:bg-sand-700 text-sand-600 dark:text-sand-300 border border-sand-200 dark:border-sand-700 font-medium"
                       >
                         <span>{repo.label}</span>
                         <ExternalLink className="w-2.5 h-2.5" />
@@ -178,7 +178,7 @@ export const StudentResumesStudio = () => {
                         href={att.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-peach-100/70 dark:bg-sand-800/60 hover:bg-maroon-50 dark:hover:bg-sand-700 text-sand-600 dark:text-sand-300 border border-sand-200 dark:border-sand-700 font-medium"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/45 backdrop-blur-xl dark:bg-white/5 hover:bg-maroon-50 dark:hover:bg-sand-700 text-sand-600 dark:text-sand-300 border border-sand-200 dark:border-sand-700 font-medium"
                       >
                         <span>{att.label}</span>
                         <ExternalLink className="w-2.5 h-2.5" />

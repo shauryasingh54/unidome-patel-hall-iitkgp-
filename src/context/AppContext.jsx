@@ -209,7 +209,9 @@ export const AppProvider = ({ children }) => {
 
   // Student apply to opportunity with selected resume profile & pitch
   const submitApplication = ({ opportunityId, selectedResumeId, pitchNote }) => {
-    const matchedOpp = opportunities.find(o => o.id === opportunityId) || opportunities[0];
+    const matchedOpp = opportunities.find(o => o.id === opportunityId);
+    if (!matchedOpp) return;
+    if (applications.some(a => a.opportunityId === opportunityId && a.studentName === currentUser.name)) return;
     const matchedResume = studentResumes.find(r => r.id === selectedResumeId) || studentResumes[0];
 
     const newApp = {
@@ -455,6 +457,11 @@ export const AppProvider = ({ children }) => {
     setReferralRequests(prev => [newRequest, ...prev]);
   };
 
+  // Admin: move a custom referral request through verification
+  const updateReferralStatus = (requestId, status) => {
+    setReferralRequests(prev => prev.map(r => (r.id === requestId ? { ...r, status } : r)));
+  };
+
   // Student/Alumni: generate a UniDome ID during the Gmail/manual registration flow
   const registerGmailDomeId = ({ email, fullName, role, rollNo, companyName }) => {
     const newUser = {
@@ -529,7 +536,8 @@ export const AppProvider = ({ children }) => {
         importDatabaseBackup,
         transferAdminAccess,
         registerGmailDomeId,
-        submitCustomReferralRequest
+        submitCustomReferralRequest,
+        updateReferralStatus
       }}
     >
       {children}

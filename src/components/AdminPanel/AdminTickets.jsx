@@ -25,7 +25,7 @@ export const AdminTickets = () => {
           Master Application Tickets
         </h1>
         <div className="relative sm:w-64">
-          <Search className="absolute left-3 top-2.5 w-4 h-4 text-sand-400" />
+          <Search className="absolute left-3 top-2.5 w-4 h-4 text-sand-600" />
           <input
             type="text"
             placeholder="Search ticket..."
@@ -65,7 +65,7 @@ export const AdminTickets = () => {
                     {app.scoreOutOf10 ? (
                       <span className="pill-success font-mono">{app.scoreOutOf10} / 10</span>
                     ) : (
-                      <span className="text-[11px] text-sand-400 font-mono">Unrated</span>
+                      <span className="text-[11px] text-sand-600 font-mono">Unrated</span>
                     )}
                   </td>
                   <td className="p-4">

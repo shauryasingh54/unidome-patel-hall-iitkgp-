@@ -47,7 +47,7 @@ export const FeedbackNetworkDrawer = () => {
       {/* Search Input */}
       <div className="p-4 border-b divider bg-peach-50/40 dark:bg-sand-950/30">
         <div className="relative">
-          <Search className="absolute left-3 top-2.5 w-4 h-4 text-sand-400" />
+          <Search className="absolute left-3 top-2.5 w-4 h-4 text-sand-600" />
           <input
             type="text"
             placeholder="Search candidate name, company, alum..."
@@ -76,7 +76,7 @@ export const FeedbackNetworkDrawer = () => {
                     <h4 className="font-extrabold text-sm text-heading">
                       {item.studentName}
                     </h4>
-                    <span className="text-[10px] font-mono text-sand-400">
+                    <span className="text-[10px] font-mono text-sand-600">
                       ({item.studentRoll})
                     </span>
                   </div>
@@ -109,7 +109,7 @@ export const FeedbackNetworkDrawer = () => {
               )}
 
               {/* Footer Meta */}
-              <div className="pt-2 border-t divider flex items-center justify-between text-[10px] text-sand-400 font-mono">
+              <div className="pt-2 border-t divider flex items-center justify-between text-[10px] text-sand-600 font-mono">
                 <span className="flex items-center gap-1">
                   <UserCheck className="w-3 h-3 text-maroon-600" /> Evaluated by {item.alumName} ({item.alumBatch})
                 </span>

@@ -36,10 +36,10 @@ export const AuthModal = ({ onClose }) => {
 
     setTimeout(() => {
       const regUser = registerGmailDomeId({
-        email: email || 'user@gmail.com',
-        fullName: fullName || 'Verified User',
+        email,
+        fullName: fullName.trim(),
         role: role,
-        rollNo: rollNo || '2026-9402',
+        rollNo: rollNo.trim(),
         companyName: companyName
       });
       setGeneratedUser(regUser);
@@ -115,7 +115,7 @@ export const AuthModal = ({ onClose }) => {
                 <path fill="#FBBC05" d="M5.28 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l3.99-3.15z"/>
                 <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.72-4.96z"/>
               </svg>
-              <span>Continue with Gmail / Google OAuth</span>
+              <span>Continue with Google (demo)</span>
             </button>
 
             <div className="relative my-4 text-center">
@@ -141,7 +141,7 @@ export const AuthModal = ({ onClose }) => {
                       className={`flex-1 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                         role === r
                           ? 'bg-maroon-700 text-peach-50 border-maroon-700 shadow-sm'
-                          : 'bg-peach-50 dark:bg-sand-900 text-sand-500 dark:text-sand-400 border-sand-200 dark:border-sand-700'
+                          : 'bg-peach-50 dark:bg-sand-900 text-sand-700 dark:text-sand-300 border-sand-200 dark:border-sand-700'
                       }`}
                     >
                       {r}

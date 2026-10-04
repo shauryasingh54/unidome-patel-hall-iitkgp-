@@ -1,231 +1,140 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { RegisterModal } from './RegisterModal';
-import {
-  GraduationCap,
-  ShieldCheck,
-  ArrowRight,
-  Flame
-} from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
+
+const DEMO_IDS = [
+  {
+    key: 'student',
+    initials: 'SG',
+    name: 'Sanya Gupta',
+    role: 'Student',
+    detail: '2021CSB1042 · CSE & Design · CPA 9.2'
+  },
+  {
+    key: 'alumni',
+    initials: 'AM',
+    name: 'Aarav Mehta',
+    role: 'Alumni reviewer',
+    detail: "Lead Product Designer, Stripe · Class of '21"
+  }
+];
+
+const PROMISES = [
+  'Apply in one click with any of your four resume profiles',
+  'Get CV scores and feedback from verified Patel Hall alumni',
+  'Private referral fast-tracks for the strongest candidates'
+];
 
 export const LandingAuthPage = () => {
-  const {
-    loginAsStudent,
-    loginAsAlumni,
-    loginCustom,
-    isRegisterModalOpen,
-    setIsRegisterModalOpen
-  } = useApp();
-
+  const { loginAsStudent, loginAsAlumni, loginCustom, isRegisterModalOpen, setIsRegisterModalOpen } = useApp();
   const [inputEmail, setInputEmail] = useState('');
   const [inputRole, setInputRole] = useState('Student');
 
+  const enterDemo = (key) => (key === 'student' ? loginAsStudent() : loginAsAlumni());
+
   const handleCustomSubmit = (e) => {
     e.preventDefault();
-    loginCustom(inputEmail, inputRole);
+    loginCustom(inputEmail.trim(), inputRole);
   };
 
   return (
-    <div className="min-h-screen w-full surface-page text-heading font-sans antialiased selection:bg-maroon-200 relative overflow-hidden">
+    <div className="w-full flex flex-col min-h-[100dvh] font-sans antialiased selection:bg-maroon-200">
 
-      <div className="relative z-10 flex flex-col min-h-screen p-4 sm:p-6 lg:p-10">
+      <header className="w-full max-w-6xl mx-auto flex items-center justify-between gap-4 px-5 sm:px-8 pt-6">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-full bg-white p-0.5 border border-maroon-100 flex items-center justify-center">
+            <img src="/patel_hall_logo.png" alt="Patel Hall emblem" className="h-full w-full object-contain" />
+          </div>
+          <div>
+            <div className="font-extrabold text-sm text-maroon-800 dark:text-peach-50 leading-none">Patel Hall of Residence</div>
+            <div className="hidden sm:block text-[11px] text-muted leading-none mt-1">IIT Kharagpur · Placement & Alumni Referral Portal</div>
+          </div>
+        </div>
+        <button onClick={() => setIsRegisterModalOpen(true)} className="btn-secondary px-3.5 py-2 text-xs whitespace-nowrap shrink-0">
+          New registration
+        </button>
+      </header>
 
-        {/* Top Navbar */}
-        <header className="max-w-6xl w-full mx-auto flex items-center justify-between py-2">
-          <div className="flex items-center gap-3">
-            <div className="h-11 w-11 sm:h-12 sm:w-12 rounded-full bg-white p-0.5 border border-maroon-100 shadow-sm flex items-center justify-center shrink-0">
-              <img
-                src="/patel_hall_logo.png"
-                alt="Patel Hall Logo"
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-base sm:text-lg text-maroon-800 dark:text-peach-50 tracking-tight leading-none">
-                  Patel Hall of Residence
-                </span>
-                <span className="pill-brand">
-                  IIT Kharagpur
-                </span>
-              </div>
-              <span className="text-xs text-muted font-medium mt-1 block">
-                Placement & Alumni Referral Portal
-              </span>
-            </div>
+      <main className="flex-1 w-full max-w-6xl mx-auto px-5 sm:px-8 py-8 lg:py-12 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+
+        <section className="lg:col-span-7 space-y-6 reveal">
+          <span className="text-label">Patel Ka Tempo High Hai!</span>
+          <h1 className="display text-5xl sm:text-7xl text-maroon-900 dark:text-peach-50 leading-[0.95]">
+            Patel Hall<br />Referral Vault
+          </h1>
+          <p className="text-base sm:text-lg text-muted leading-relaxed max-w-xl">
+            Connect with verified Patel Hall alumni working at Stripe, Uber, Google and other leading tech companies.
+          </p>
+          <ul className="space-y-2.5">
+            {PROMISES.map(p => (
+              <li key={p} className="flex items-start gap-2.5 text-sm text-heading">
+                <CheckCircle2 className="w-4 h-4 text-maroon-600 dark:text-peach-300 mt-0.5 shrink-0" />
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="lg:col-span-5 surface-card p-6 sm:p-7 space-y-5 reveal reveal-2">
+          <div>
+            <h2 className="display text-2xl text-heading">Sign in</h2>
+            <p className="text-xs text-muted mt-1">Pick a demo account to explore, or use your webmail.</p>
           </div>
 
-          <button
-            onClick={() => setIsRegisterModalOpen(true)}
-            className="btn-secondary"
-          >
-            <span>New Registration</span>
-          </button>
-        </header>
-
-        {/* Main Center Grid */}
-        <main className="max-w-6xl w-full mx-auto my-auto py-12 space-y-14">
-
-          {/* Title Hero */}
-          <div className="text-center space-y-4 max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-maroon-50 dark:bg-maroon-900/30 border border-maroon-100 dark:border-maroon-800 text-maroon-700 dark:text-peach-200 text-xs font-bold">
-              <Flame className="w-3.5 h-3.5" />
-              <span>Patelian Brotherhood & Career Network</span>
-            </div>
-            <h1 className="display text-5xl sm:text-7xl text-maroon-900 dark:text-peach-50 leading-[0.98]">
-              Patel Hall<br />Referral Vault
-            </h1>
-            <p className="text-sm sm:text-base text-muted leading-relaxed max-w-xl mx-auto">
-              Connect students with verified alumni across Stripe, Uber, Google, and top Tier-1 tech for 1-click CV reviews, 1-to-10 scoring, and confidential referral fast-tracks.
-            </p>
-          </div>
-
-          {/* 2 Clean Showcase Demo ID Cards (One-Click Entry) */}
-          <div className="space-y-5">
-            <div className="flex items-center justify-between max-w-4xl mx-auto px-1">
-              <span className="text-label">
-                Instant Demo Credentials — select an ID to explore
-              </span>
-              <span className="text-mono-meta">1-Click Full Access</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-
-              {/* Demo ID 1: Student */}
-              <div
-                onClick={loginAsStudent}
-                className="surface-card p-6 sm:p-8 hover:border-maroon-300 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 group relative overflow-hidden"
+          <div className="space-y-2">
+            {DEMO_IDS.map(d => (
+              <button
+                key={d.key}
+                onClick={() => enterDemo(d.key)}
+                className="w-full flex items-center gap-3.5 p-3.5 rounded-lg border border-sand-200 dark:border-sand-700 hover:border-maroon-400 hover:bg-maroon-50/50 dark:hover:bg-sand-800/50 transition-colors text-left cursor-pointer group"
               >
-
-                <div className="space-y-4 relative z-10">
-                  <div className="flex items-center justify-between">
-                    <span className="pill-brand">
-                      STUDENT DEMO ID
-                    </span>
-                    <span className="text-mono-meta">Room D-304</span>
-                  </div>
-
-                  <div className="flex items-start gap-4 pt-1">
-                    <div className="h-14 w-14 rounded-2xl bg-maroon-700 text-peach-50 flex items-center justify-center font-black text-lg shrink-0 group-hover:scale-105 transition-transform">
-                      SG
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-black text-heading group-hover:text-maroon-700 dark:group-hover:text-peach-200 transition-colors">
-                        Sanya Gupta
-                      </h3>
-                      <p className="text-xs text-muted font-mono">
-                        2021CSB1042 • Computer Science & Design
-                      </p>
-                      <div className="flex items-center gap-2 mt-1.5">
-                        <span className="pill-neutral">CPA 9.2 / 10.0</span>
-                        <span className="text-mono-meta">Batch of '25</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="text-sm text-muted leading-relaxed">
-                    Pre-configured with a <strong className="text-heading">4-Resume Studio</strong>, active Stripe & DeepMind application submissions, and live feedback reports.
-                  </p>
+                <div className="h-10 w-10 rounded-lg bg-maroon-700 text-peach-50 flex items-center justify-center font-black text-sm shrink-0">
+                  {d.initials}
                 </div>
-
-                <button type="button" className="btn-primary w-full py-3">
-                  <GraduationCap className="w-4 h-4" />
-                  <span>Enter as Student (Sanya Gupta)</span>
-                  <ArrowRight className="w-3.5 h-3.5 stroke-[3]" />
-                </button>
-              </div>
-
-              {/* Demo ID 2: Alumni Reviewer */}
-              <div
-                onClick={loginAsAlumni}
-                className="surface-card p-6 sm:p-8 hover:border-maroon-300 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 group relative overflow-hidden"
-              >
-
-                <div className="space-y-4 relative z-10">
-                  <div className="flex items-center justify-between">
-                    <span className="pill-accent">
-                      ALUMNI DEMO ID
-                    </span>
-                    <span className="text-mono-meta">Class of '21</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-sm text-heading">{d.name}</span>
+                    <span className="pill-neutral">{d.role}</span>
                   </div>
-
-                  <div className="flex items-start gap-4 pt-1">
-                    <div className="h-14 w-14 rounded-2xl bg-peach-600 text-peach-50 flex items-center justify-center font-black text-lg shrink-0 group-hover:scale-105 transition-transform">
-                      AM
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-black text-heading group-hover:text-maroon-700 dark:group-hover:text-peach-200 transition-colors">
-                        Aarav Mehta
-                      </h3>
-                      <p className="text-xs text-muted font-mono">
-                        17CS10022 • Lead Product Designer at Stripe
-                      </p>
-                      <div className="flex items-center gap-2 mt-1.5">
-                        <span className="pill-neutral">Patel Alum POC</span>
-                        <span className="text-mono-meta">Stripe Bengaluru HQ</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="text-sm text-muted leading-relaxed">
-                    Pre-configured with <strong className="text-heading">Stripe Referral Drives</strong>, incoming student CV queue, a zoomable CV viewer, and 1-to-10 scoring drawer.
-                  </p>
+                  <p className="text-[11px] text-muted font-mono truncate mt-0.5">{d.detail}</p>
                 </div>
-
-                <button type="button" className="btn-primary w-full py-3">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Enter as Alumni Reviewer (Aarav Mehta)</span>
-                  <ArrowRight className="w-3.5 h-3.5 stroke-[3]" />
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Custom Credential Sign-In Accordion */}
-          <div className="max-w-md mx-auto surface-card-soft p-6 text-center space-y-3.5">
-            <span className="text-label block">
-              Or Sign In with Custom IIT KGP Webmail
-            </span>
-
-            <form onSubmit={handleCustomSubmit} className="space-y-2.5">
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  placeholder="roll@kgpian.iitkgp.ac.in"
-                  value={inputEmail}
-                  onChange={e => setInputEmail(e.target.value)}
-                  className="input-field font-mono"
-                />
-                <select
-                  value={inputRole}
-                  onChange={e => setInputRole(e.target.value)}
-                  className="input-field w-auto"
-                >
-                  <option value="Student">Student</option>
-                  <option value="Alumni">Alumni</option>
-                </select>
-              </div>
-
-              <button type="submit" className="btn-primary w-full">
-                Sign In with Credentials
+                <ArrowRight className="w-4 h-4 text-sand-600 group-hover:text-maroon-700 transition-colors shrink-0" />
               </button>
-            </form>
+            ))}
           </div>
 
-        </main>
+          <div className="flex items-center gap-3 text-[11px] text-sand-600 font-mono uppercase tracking-wider">
+            <span className="flex-1 border-t divider" /> or use webmail <span className="flex-1 border-t divider" />
+          </div>
 
-        {/* Footer */}
-        <footer className="max-w-6xl w-full mx-auto pt-6 border-t divider flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-muted font-mono">
-          <span>Patel Hall of Residence • Indian Institute of Technology Kharagpur</span>
-          <span>"Lux Et Veritas Vincant" • Placement Network v2.4</span>
-        </footer>
+          <form onSubmit={handleCustomSubmit} className="space-y-2.5">
+            <div className="grid grid-cols-[1fr_auto] gap-2">
+              <input
+                type="email"
+                required
+                placeholder="roll@kgpian.iitkgp.ac.in"
+                value={inputEmail}
+                onChange={e => setInputEmail(e.target.value)}
+                className="input-field font-mono text-xs"
+              />
+              <select value={inputRole} onChange={e => setInputRole(e.target.value)} className="input-field w-auto">
+                <option value="Student">Student</option>
+                <option value="Alumni">Alumni</option>
+              </select>
+            </div>
+            <button type="submit" className="btn-primary w-full">Continue</button>
+          </form>
+        </section>
 
-      </div>
+      </main>
 
-      {isRegisterModalOpen && (
-        <RegisterModal onClose={() => setIsRegisterModalOpen(false)} />
-      )}
+      <footer className="w-full max-w-6xl mx-auto px-5 sm:px-8 py-5 border-t divider flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-muted">
+        <span>Patel Hall of Residence · Indian Institute of Technology Kharagpur</span>
+        <span className="font-mono">Lux Et Veritas Vincant</span>
+      </footer>
+
+      {isRegisterModalOpen && <RegisterModal onClose={() => setIsRegisterModalOpen(false)} />}
 
     </div>
   );
